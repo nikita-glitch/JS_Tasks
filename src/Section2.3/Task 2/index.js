@@ -6,10 +6,10 @@ for (let item of li) {
 }
 
 document.addEventListener('click', function(e){
-  if (e.target.tagName != 'SPAN') {
+  let target = e.target;
+  if (target.tagName != 'SPAN') {
     return;
   }
-  let listItem = e.target.parentNode.querySelector('ul');
-  
+  let listItem = target.parentNode.querySelector('ul');
   listItem.hidden = !listItem.hidden;
 });
