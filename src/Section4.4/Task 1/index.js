@@ -15,8 +15,9 @@ button.addEventListener("click", (e) => {
 });
 function showPrompt(line, callback) {
   formText.innerHTML = line;
+  let [input] = document.getElementsByName("text");
   form.addEventListener("submit", (e) => {
-    let [input] = document.getElementsByName("text");
+    
 
     let value = input.value;
     if (value == "") {
@@ -25,19 +26,31 @@ function showPrompt(line, callback) {
 
     callback(value);
   });
-}
-let length = form.elements.length - 1;
-let first = form.elements[0]
-let last = form.elements[length]
-first.onkeydown = (e) => {
-  if ( e.key == 'Tab' && !e.shiftKey) {
-    first.focus();
-    return false;
-  } 
-}
-last.onkeydown = (e) => {
-  if((e.key == 'Tab' && e.shiftKey)) {
-    last.focus();
-    return false;
-  }
+  form.cancel.onclick = function() {
+    formContainer.style.display = 'none';
+  };
+
+  document.onkeydown = function(e) {
+    if (e.key == 'Escape') {
+      formContainer.style.display = 'none';
+    }
+  };
+  let first = form.elements[0];
+  let last = form.elements[form.elements.length - 1];
+  
+  last.onkeydown = function(e) {
+    if (e.key == 'Tab' && !e.shiftKey) {
+      first.focus();
+      return false;
+    }
+  };
+
+  first.onkeydown = function(e) {
+    if (e.key == 'Tab' && e.shiftKey) {
+      last.focus();
+      return false;
+    }
+  };
+  formContainer.style.display = 'block';
+  input.focus();
 }
